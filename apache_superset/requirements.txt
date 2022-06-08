@@ -72,8 +72,10 @@ packaging==21.3
 pandas==1.3.5
 parsedatetime==2.6
 pgsanity==0.2.9
+Pillow==9.1.1
 polyline==1.4.0
 prison==0.2.1
+psycopg2-binary==2.9.3
 pyarrow==5.0.0
 pycparser==2.21
 PyJWT==1.7.1
@@ -96,6 +98,7 @@ slackclient==2.5.0
 sniffio==1.2.0
 sortedcontainers==2.4.0
 SQLAlchemy==1.3.24
+sqlalchemy-redshift==0.8.9
 SQLAlchemy-Utils==0.37.9
 sqloxide==0.1.15
 sqlparse==0.3.0
