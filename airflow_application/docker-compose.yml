@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+  airflow:
+    build:
+      context: .
+    container_name: "airflow"
+    env_file: .env
+    ports:
+      - "8080:8080"
+      - "5892:5892" # debugger
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    environment:
+      # for environment variables that only need to exist in the local container
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://postgres:@db_airflow:5430/data_airflow"
+      DEBUG_VSCODE: "1"
+      CONTAINER_NAME: "airflow" # used to differentiate the debug port in debug.py
+    command: ./initialize_airflow.sh
+    # command: airflow db init && (airflow scheduler &) && airflow webserver
+    depends_on:
+      - db_airflow
+  db_airflow:
+    image: "postgres:12.3"
+    container_name: "db_airflow"
+    environment:
+      POSTGRES_DB: "data_airflow"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    ports:
+      - "5430:5430"
+    volumes:
+      - db_airflow_volume:/var/lib/postgresql/data
+    command: -p 5430
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+volumes:
+  db_airflow_volume: null
