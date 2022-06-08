@@ -11,4 +11,4 @@ services:
       - type: bind
         source: .
         target: /app
-
+    command: ./initialize_superset.sh

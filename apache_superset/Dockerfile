@@ -19,24 +19,10 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+COPY . /app
+
 ENV PYTHONPATH=. \
     FLASK_APP=superset
-
-RUN superset db upgrade
-RUN pip install Pillow
-RUN superset fab create-admin \
-    --username admin \
-    --firstname Superset \
-    --lastname Admin \
-    --email admin@superset.com \
-    --password admin
-
-# Load some data to play with
-RUN superset load_examples
-
-
-# Create default roles and permissions
-RUN superset init
 
 # 8088 gets connected to the reverse proxy in EB
 EXPOSE 8088
