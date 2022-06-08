@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  superset:
+    build:
+      context: .
+    container_name: "superset"
+    env_file: .env
+    ports:
+      - "8088:8088"
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+

@@ -7,7 +7,6 @@ services:
     env_file: .env
     ports:
       - "8080:8080"
-      - "5892:5892" # debugger
     volumes:
       - type: bind
         source: .
@@ -18,7 +17,6 @@ services:
       DEBUG_VSCODE: "1"
       CONTAINER_NAME: "airflow" # used to differentiate the debug port in debug.py
     command: ./initialize_airflow.sh
-    # command: airflow db init && (airflow scheduler &) && airflow webserver
     depends_on:
       - db_airflow
   db_airflow:
