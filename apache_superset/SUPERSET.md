@@ -31,6 +31,6 @@ password: admin
 
 ## Deploy
 
-- `cd airflow_application`
+- `cd apache_superset`
 - Make sure you have **AWS EB CLI**, follow the instructions in this official [AWS Doc](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install-advanced.html).
 - Initialize EB Application: `eb deploy`

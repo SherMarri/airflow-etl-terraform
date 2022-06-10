@@ -15,6 +15,7 @@ Sensitive variables should not be exposed in files. We use [variables.tf](variab
 
 ```
 # Install providers
+cd terraform
 terraform init
 
 # Examine changes
