@@ -14,6 +14,17 @@ variable "secret_key" {
   type        = string
 }
 
+variable "security_group" {
+  description = "Security Group"
+  type        = string
+}
+
+variable "security_group_name" {
+  description = "Security Group"
+  type        = string
+}
+
+
 variable "redshift_db_name" {
   description = "Redshift DB Name"
   type        = string

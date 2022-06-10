@@ -1,5 +1,13 @@
 # Apache Airflow
 
+## Set DB String
+
+Update SQL Alchemy connection string in `superset_config.py` file.
+
+```
+SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://<user>:<password>@<end-point>:<port>/<db_name>
+```
+
 ## Setup Locally
 
 ```

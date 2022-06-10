@@ -1,5 +1,13 @@
 # Apache Airflow
 
+## Set DB String
+
+Update SQL Alchemy connection string in `airflow.cfg` file.
+
+```
+sql_alchemy_conn=postgresql+psycopg2://<user>:<password>@<end-point>:<port>/<db_name>
+```
+
 ## Setup Locally
 
 ```

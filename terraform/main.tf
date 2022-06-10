@@ -15,38 +15,42 @@ provider "aws" {
 }
 
 resource "aws_redshift_cluster" "redshift_cluster" {
-  cluster_identifier = "experimental-redshift-cluster"
-  database_name      = var.redshift_db_name
-  master_username    = var.redshift_user
-  master_password    = var.redshift_password
-  node_type          = "dc2.large"
-  cluster_type       = "single-node"
+  cluster_identifier     = "experimental-redshift-cluster"
+  database_name          = var.redshift_db_name
+  master_username        = var.redshift_user
+  master_password        = var.redshift_password
+  node_type              = "dc2.large"
+  cluster_type           = "single-node"
+  vpc_security_group_ids = [var.security_group]
+  skip_final_snapshot    = true
 }
 
 resource "aws_db_instance" "airflow_db" {
-  identifier          = "airflow-db"
-  allocated_storage   = 10
-  engine              = "postgres"
-  engine_version      = "13.4"
-  instance_class      = "db.t3.micro"
-  name                = var.airflow_db_name
-  username            = var.airflow_db_user
-  password            = var.airflow_db_password
-  skip_final_snapshot = true
-  publicly_accessible = true
+  identifier             = "airflow-db"
+  allocated_storage      = 10
+  engine                 = "postgres"
+  engine_version         = "13.4"
+  instance_class         = "db.t3.micro"
+  name                   = var.airflow_db_name
+  username               = var.airflow_db_user
+  password               = var.airflow_db_password
+  skip_final_snapshot    = true
+  publicly_accessible    = true
+  vpc_security_group_ids = [var.security_group]
 }
 
 resource "aws_db_instance" "superset_db" {
-  identifier          = "superset-db"
-  allocated_storage   = 10
-  engine              = "postgres"
-  engine_version      = "13.4"
-  instance_class      = "db.t3.micro"
-  name                = var.superset_db_name
-  username            = var.superset_db_user
-  password            = var.superset_db_password
-  skip_final_snapshot = true
-  publicly_accessible = true
+  identifier             = "superset-db"
+  allocated_storage      = 10
+  engine                 = "postgres"
+  engine_version         = "13.4"
+  instance_class         = "db.t3.micro"
+  name                   = var.superset_db_name
+  username               = var.superset_db_user
+  password               = var.superset_db_password
+  skip_final_snapshot    = true
+  publicly_accessible    = true
+  vpc_security_group_ids = [var.security_group]
 }
 
 # Resource for Apache Airflow, Elastic Beanstalk
@@ -86,6 +90,12 @@ resource "aws_elastic_beanstalk_environment" "airflow_app_env" {
     value     = "t2.large"
   }
 
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SecurityGroups"
+    value     = var.security_group_name
+  }
+
 }
 
 # Resource for Apache Superset, Elastic Beanstalk
@@ -123,5 +133,11 @@ resource "aws_elastic_beanstalk_environment" "superset_app_env" {
     namespace = "aws:ec2:instances"
     name      = "InstanceTypes"
     value     = "t2.large"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SecurityGroups"
+    value     = var.security_group_name
   }
 }
