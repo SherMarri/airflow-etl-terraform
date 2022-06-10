@@ -1,0 +1,8 @@
+# venv
+venv
+.git
+
+docker-compose.yml
+# /config/config_local.yml
+
+.elasticbeanstalk/app_versions/*

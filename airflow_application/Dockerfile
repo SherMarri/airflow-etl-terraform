@@ -29,7 +29,7 @@ EXPOSE 8080
 ENV PYTHONPATH=. \
     AIRFLOW_HOME=/root/airflow
 
-CMD airflow db init && (airflow scheduler &) && airflow webserver
+CMD ["/bin/bash", "./initialize_airflow.sh"]
 
 HEALTHCHECK --interval=60s --start-period=10s --timeout=30s --retries=3 CMD curl -f http://localhost:8080/health || exit 1
 # *** END service-specific customizations

@@ -13,9 +13,8 @@ services:
         target: /app
     environment:
       # for environment variables that only need to exist in the local container
-      AIRFLOW__CORE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://postgres:@db_airflow:5430/data_airflow"
-      DEBUG_VSCODE: "1"
-      CONTAINER_NAME: "airflow" # used to differentiate the debug port in debug.py
+      # AIRFLOW__CORE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://postgres:@db_airflow:5430/data_airflow"
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: "postgresql+psycopg2://foo:foobarbaz@airflow-db.ccvxctklfy4v.us-west-2.rds.amazonaws.com:5432/airflow_db"
     command: ./initialize_airflow.sh
     depends_on:
       - db_airflow

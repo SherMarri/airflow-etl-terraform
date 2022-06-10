@@ -9,44 +9,119 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region     = "us-west-2"
-  access_key = "AKIASCG57UQ4EOHDPLGC"                     # TODO: Temporary, remove this after experimentation
-  secret_key = "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" # TODO: Temporary, remove this after experimentation
+  region     = var.aws_region
+  access_key = var.access_key
+  secret_key = var.secret_key
 }
 
-resource "aws_redshift_cluster" "example" {
+resource "aws_redshift_cluster" "redshift_cluster" {
   cluster_identifier = "experimental-redshift-cluster"
-  database_name      = "experimentaldb"
-  master_username    = "experimentaluser"
-  master_password    = "ExperimentalNotSoSecure1234Password"
+  database_name      = var.redshift_db_name
+  master_username    = var.redshift_user
+  master_password    = var.redshift_password
   node_type          = "dc2.large"
   cluster_type       = "single-node"
 }
 
 resource "aws_db_instance" "airflow_db" {
+  identifier          = "airflow-db"
   allocated_storage   = 10
   engine              = "postgres"
   engine_version      = "13.4"
   instance_class      = "db.t3.micro"
-  name                = "airflow_db"
-  username            = "foo"
-  password            = "foobarbaz"
+  name                = var.airflow_db_name
+  username            = var.airflow_db_user
+  password            = var.airflow_db_password
   skip_final_snapshot = true
   publicly_accessible = true
 }
 
 resource "aws_db_instance" "superset_db" {
+  identifier          = "superset-db"
   allocated_storage   = 10
   engine              = "postgres"
   engine_version      = "13.4"
   instance_class      = "db.t3.micro"
-  name                = "superset_db"
-  username            = "foo"
-  password            = "foobarbaz"
+  name                = var.superset_db_name
+  username            = var.superset_db_user
+  password            = var.superset_db_password
   skip_final_snapshot = true
   publicly_accessible = true
 }
 
 # Resource for Apache Airflow, Elastic Beanstalk
+resource "aws_elastic_beanstalk_application" "airflow_app" {
+  name = "airflow"
+}
+
+# Create elastic beanstalk Environment
+
+resource "aws_elastic_beanstalk_environment" "airflow_app_env" {
+  name                = "airflow-env"
+  application         = aws_elastic_beanstalk_application.airflow_app.name
+  solution_stack_name = "64bit Amazon Linux 2 v3.4.16 running Docker"
+  tier                = "WebServer"
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = "aws-elasticbeanstalk-ec2-role"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "RootVolumeSize"
+    value     = 32
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name      = "MaxSize"
+    value     = 1
+  }
+
+  setting {
+    namespace = "aws:ec2:instances"
+    name      = "InstanceTypes"
+    value     = "t2.large"
+  }
+
+}
 
 # Resource for Apache Superset, Elastic Beanstalk
+resource "aws_elastic_beanstalk_application" "superset_app" {
+  name = "superset"
+}
+
+# Create elastic beanstalk Environment
+
+resource "aws_elastic_beanstalk_environment" "superset_app_env" {
+  name                = "superset-env"
+  application         = aws_elastic_beanstalk_application.superset_app.name
+  solution_stack_name = "64bit Amazon Linux 2 v3.4.16 running Docker"
+  tier                = "WebServer"
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = "aws-elasticbeanstalk-ec2-role"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "RootVolumeSize"
+    value     = 32
+  }
+
+  setting {
+    namespace = "aws:autoscaling:asg"
+    name      = "MaxSize"
+    value     = 1
+  }
+
+  setting {
+    namespace = "aws:ec2:instances"
+    name      = "InstanceTypes"
+    value     = "t2.large"
+  }
+}

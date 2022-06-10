@@ -1,2 +1,6 @@
 venv
 .git
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+.git
+.gitignore

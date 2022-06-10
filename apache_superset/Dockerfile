@@ -29,4 +29,6 @@ EXPOSE 8088
 
 # To start a development web server on port 8088, use -p to bind to another port
 # CMD superset run -p 8088 --with-threads --reload --debugger
-CMD superset run -p 8088 --host=0.0.0.0
+CMD ["/bin/bash", "./initialize_superset.sh"]
+
+# CMD superset run -p 8088 --host=0.0.0.0
