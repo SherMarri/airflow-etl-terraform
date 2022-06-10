@@ -4,7 +4,7 @@ Set an ETL and BI infrastructure using RDS, Airflow, Redshift, Apache Superset a
 
 ## Provisioning Resources
 
-Follow the instructions in this[TERRAFORM doc](TERRAFORM.md) to setup the resources required for this infrastructure.
+Follow the instructions in this [TERRAFORM doc](TERRAFORM.md) to setup the resources required for this infrastructure.
 
 ## Apache Airflow
 
