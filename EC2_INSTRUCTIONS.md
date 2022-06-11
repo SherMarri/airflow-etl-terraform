@@ -7,6 +7,7 @@
   Instance Type: t2.medium
   Security Group: default
   Key Pair: Create or use an existing one
+  OS: Ubuntu 20
   ```
 - Copy the _.pem_ file to _~/.ssh_ directory.
 - Update permissions
