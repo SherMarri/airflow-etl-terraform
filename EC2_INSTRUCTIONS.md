@@ -57,11 +57,7 @@ sudo apt-get update && sudo apt-get install terraform
 
 ## Provision Infrastructure
 
-```
-terraform init
-terraform plan
-terraform apply
-```
+Follow the instructions in this [TERRAFORM doc](terraform/TERRAFORM.md) to setup the resources required for this infrastructure.
 
 ## Push the updated terraform state to git origin (master)
 
@@ -94,14 +90,8 @@ export AWS_SECRET_ACCESS_KEY=<KeyValue>
 
 ## Deploy Airflow
 
-```
-cd airflow_application
-eb deploy
-```
+Follow the instructions in this [AIRFLOW doc](airflow_application/AIRFLOW.md) to setup the Airflow.
 
 ## Deploy Superset
 
-```
-cd apache_superset
-eb deploy
-```
+Follow the instructions in this [SUPERSET doc](apache_superset/SUPERSET.md) to setup the Superset.
