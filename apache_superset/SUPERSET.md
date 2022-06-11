@@ -25,7 +25,7 @@ password: admin
 
 ## How to use Apache Superset
 
-- Go to http://localhost:8088.
+- Go to http://localhost:8088 or remote.
 - Enter login credentials.
 - Explore the application by clicking on any pre-loaded example dashboards.
 
