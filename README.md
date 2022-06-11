@@ -1,4 +1,4 @@
-# airflow-etl-terraform
+# Setup ETL and BI Infrastructure
 
 Set an ETL and BI infrastructure using RDS, Airflow, Redshift, Apache Superset and Terraform.
 
