@@ -4,7 +4,7 @@ Set an ETL and BI infrastructure using RDS, Airflow, Redshift, Apache Superset a
 
 ## Deploying from EC2
 
-Follow the instructions in [EC2 INSTRUCTIONS DOC](EC2_INSTRUCTIONS.md) to deploy the infrastructure and applications from an Ubuntu EC2 instance.
+Follow the instructions in [EC2 INSTRUCTIONS doc](EC2_INSTRUCTIONS.md) to deploy the infrastructure and applications from an Ubuntu EC2 instance.
 
 ## Provisioning Resources
 
