@@ -4,6 +4,8 @@ Set an ETL and BI infrastructure using RDS, Airflow, Redshift, Apache Superset a
 
 ## Core Dependencies
 
+Install these tools on your local machine:
+
 - Terraform
 - AWS EB CLI
 
